@@ -26,11 +26,4 @@ class ViewController: UIViewController {
 
         wormhole.bindListener(listener, forMessageWithIdentifier: "watchTap")
     }
-
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-
-        println("viewWilDisappear")
-    }
 }
-

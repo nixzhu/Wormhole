@@ -12,27 +12,16 @@ public class Wormhole: NSObject {
     let appGroupIdentifier: String
     let messageDirectoryName: String?
 
-    struct Notification {
-        static let Message = "WormholeMessageNotification"
-    }
-
     public init(appGroupIdentifier: String, messageDirectoryName: String?) {
         self.appGroupIdentifier = appGroupIdentifier
         self.messageDirectoryName = messageDirectoryName
-
-        super.init()
-
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveMessageNotification:", name: Notification.Message, object: nil)
     }
 
     deinit {
         if let center = CFNotificationCenterGetDarwinNotifyCenter() {
             CFNotificationCenterRemoveEveryObserver(center, unsafeAddressOf(self))
         }
-
-        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
-
 
     public typealias Message = NSCoding
 
@@ -42,24 +31,20 @@ public class Wormhole: NSObject {
 
     public typealias Listener = Message -> Void
 
-    var listeners = [Listener]()
-
     public func bindListener(listener: Listener, forMessageWithIdentifier identifier: String) {
         if let center = CFNotificationCenterGetDarwinNotifyCenter() {
 
-            let block: @objc_block (CFNotificationCenter!, UnsafeMutablePointer<Void>, CFString!, UnsafePointer<Void>, CFDictionary!) -> Void = { center, observer, name, object, userInfo in
+            let block: @objc_block (CFNotificationCenter!, UnsafeMutablePointer<Void>, CFString!, UnsafePointer<Void>, CFDictionary!) -> Void = { _, _, _, _, _ in
 
-                NSNotificationCenter.defaultCenter().postNotificationName(Notification.Message, object: nil, userInfo: ["identifier": identifier])
+                if let message = self.messageFromFileWithIdentifier(identifier) {
+                    listener(message)
+                }
             }
 
             let imp: COpaquePointer = imp_implementationWithBlock(unsafeBitCast(block, AnyObject.self))
             let callBack: CFNotificationCallback = unsafeBitCast(imp, CFNotificationCallback.self)
 
             CFNotificationCenterAddObserver(center, unsafeAddressOf(self), callBack, identifier, nil, CFNotificationSuspensionBehavior.DeliverImmediately)
-
-            listeners.append(listener)
-
-            println("listeners \(listeners.count)")
         }
     }
 
@@ -130,21 +115,4 @@ public class Wormhole: NSObject {
             CFNotificationCenterPostNotification(center, identifier, nil, nil, 1)
         }
     }
-
-    // MARK: NSNotification
-
-    func didReceiveMessageNotification(notification: NSNotification) {
-        if let
-            userInfo = notification.userInfo as? [String: String],
-            identifier = userInfo["identifier"] {
-
-                for listener in listeners {
-                    if let message = messageFromFileWithIdentifier(identifier) {
-                        listener(message)
-                    }
-                }
-        }
-    }
 }
-
-
