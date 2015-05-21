@@ -8,6 +8,10 @@
 
 import Foundation
 
+public func ==(lhs: Wormhole.MessageListener, rhs: Wormhole.MessageListener) -> Bool {
+    return (lhs.messageIdentifier == rhs.messageIdentifier) && (lhs.hashValue == rhs.hashValue)
+}
+
 public class Wormhole: NSObject {
 
     let appGroupIdentifier: String
@@ -35,15 +39,41 @@ public class Wormhole: NSObject {
         writeMessage(message, withIdentifier: identifier)
     }
 
-    public typealias Listener = Message -> Void
+    public struct Listener {
+        public typealias Action = Message -> Void
+
+        let name: String
+        let action: Action
+
+        public init(name: String, action: Action) {
+            self.name = name
+            self.action = action
+        }
+    }
+
+    public struct MessageListener: Hashable {
+        let messageIdentifier: String
+        let listener: Listener
+
+        public var hashValue: Int {
+            return (messageIdentifier + listener.name).hashValue
+        }
+    }
+
+    var messageListenerSet = Set<MessageListener>()
 
     public func bindListener(listener: Listener, forMessageWithIdentifier identifier: String) {
         if let center = CFNotificationCenterGetDarwinNotifyCenter() {
 
+            let messageListener = MessageListener(messageIdentifier: identifier, listener: listener)
+            messageListenerSet.insert(messageListener)
+
             let block: @objc_block (CFNotificationCenter!, UnsafeMutablePointer<Void>, CFString!, UnsafePointer<Void>, CFDictionary!) -> Void = { _, _, _, _, _ in
 
                 if let message = self.messageFromFileWithIdentifier(identifier) {
-                    listener(message)
+                    if self.messageListenerSet.contains(messageListener) {
+                        messageListener.listener.action(message)
+                    }
                 }
             }
 
@@ -52,6 +82,11 @@ public class Wormhole: NSObject {
 
             CFNotificationCenterAddObserver(center, unsafeAddressOf(self), callBack, identifier, nil, CFNotificationSuspensionBehavior.DeliverImmediately)
         }
+    }
+
+    public func unbindListener(listener: Listener, forMessageWithIdentifier identifier: String) {
+        let messageListener = MessageListener(messageIdentifier: identifier, listener: listener)
+        self.messageListenerSet.remove(messageListener)
     }
 
     public func stopListeningForMessageWithIdentifier(identifier: String) {

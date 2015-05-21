@@ -22,36 +22,48 @@
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MES-dT-pOT" userLabel="Count Label">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MES-dT-pOT" userLabel="Blue Count Label">
                                 <rect key="frame" x="273" y="240" width="55" height="120"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="100"/>
                                 <color key="textColor" red="0.13725490200000001" green="0.56862745100000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7At-EV-6tc">
-                                <rect key="frame" x="269" y="390" width="63" height="48"/>
+                                <rect key="frame" x="249" y="390" width="103" height="48"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <state key="normal" title="Stop">
+                                <state key="normal" title="Stop All">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="stop:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="FYp-JL-dmf"/>
+                                    <action selector="stopAll:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="XOS-qR-n68"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1SQ-Ir-GBr">
+                                <rect key="frame" x="358" y="276" width="96" height="48"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="Unbind">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="unbind:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="B3A-0b-VQ5"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="7At-EV-6tc" firstAttribute="top" secondItem="MES-dT-pOT" secondAttribute="bottom" constant="30" id="0cu-Gc-dQO"/>
+                            <constraint firstItem="1SQ-Ir-GBr" firstAttribute="leading" secondItem="MES-dT-pOT" secondAttribute="trailing" constant="30" id="300-3z-v84"/>
                             <constraint firstAttribute="centerX" secondItem="MES-dT-pOT" secondAttribute="centerX" id="KJW-ov-KhC"/>
                             <constraint firstItem="7At-EV-6tc" firstAttribute="centerX" secondItem="MES-dT-pOT" secondAttribute="centerX" id="WX7-bH-P79"/>
                             <constraint firstAttribute="centerY" secondItem="MES-dT-pOT" secondAttribute="centerY" id="hK6-L4-TYd"/>
                             <constraint firstItem="MES-dT-pOT" firstAttribute="top" secondItem="UPJ-LR-bN4" secondAttribute="bottom" constant="8" id="hoD-mj-Ubn"/>
                             <constraint firstItem="MES-dT-pOT" firstAttribute="centerX" secondItem="UPJ-LR-bN4" secondAttribute="centerX" id="oKi-uU-udc"/>
+                            <constraint firstItem="1SQ-Ir-GBr" firstAttribute="centerY" secondItem="MES-dT-pOT" secondAttribute="centerY" id="opN-6m-bzV"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="countLabel" destination="MES-dT-pOT" id="oe6-aC-Cwt"/>
+                        <outlet property="blueCountLabel" destination="MES-dT-pOT" id="bUc-qj-ZfM"/>
                         <outlet property="redCountLabel" destination="UPJ-LR-bN4" id="XV3-t5-vfK"/>
                     </connections>
                 </viewController>

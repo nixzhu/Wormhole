@@ -12,31 +12,48 @@ import Wormhole
 class ViewController: UIViewController {
 
     @IBOutlet weak var redCountLabel: UILabel!
-    @IBOutlet weak var countLabel: UILabel!
+    @IBOutlet weak var blueCountLabel: UILabel!
 
     let wormhole = Wormhole(appGroupIdentifier: "group.com.nixWork.Wormhole", messageDirectoryName: "Wormhole")
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        let listener: Wormhole.Listener = { [unowned self] message in
-            if let tapCount = message as? NSNumber {
-                self.countLabel.text = "\(tapCount.integerValue)"
-            }
-        }
-
-        wormhole.bindListener(listener, forMessageWithIdentifier: "watchTap")
-
-        let listener2: Wormhole.Listener = { [unowned self] message in
+    lazy var redListener: Wormhole.Listener = {
+        let action: Wormhole.Listener.Action = { [unowned self] message in
             if let tapCount = message as? NSNumber {
                 self.redCountLabel.text = "\(tapCount.integerValue)"
             }
         }
 
-        wormhole.bindListener(listener2, forMessageWithIdentifier: "watchTap")
+        let listener = Wormhole.Listener(name: "redCountLabel", action: action)
+
+        return listener
+        }()
+
+    lazy var blueListener: Wormhole.Listener = {
+        let action: Wormhole.Listener.Action = { [unowned self] message in
+            if let tapCount = message as? NSNumber {
+                self.blueCountLabel.text = "\(tapCount.integerValue)"
+            }
+        }
+
+        let listener = Wormhole.Listener(name: "blueCountLabel", action: action)
+
+        return listener
+        }()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        wormhole.bindListener(redListener, forMessageWithIdentifier: "watchTap")
+
+        wormhole.bindListener(blueListener, forMessageWithIdentifier: "watchTap")
     }
 
-    @IBAction func stop(sender: UIButton) {
+    @IBAction func stopAll(sender: UIButton) {
         wormhole.stopListeningForMessageWithIdentifier("watchTap")
     }
+
+    @IBAction func unbind(sender: UIButton) {
+        wormhole.unbindListener(blueListener, forMessageWithIdentifier: "watchTap")
+    }
+
 }
