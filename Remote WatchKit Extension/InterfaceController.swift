@@ -30,9 +30,29 @@ class InterfaceController: WKInterfaceController {
         super.didDeactivate()
     }
 
-    var tapCount = 0
-
-    @IBAction func tap() {
-        wormhole.passMessage(NSNumber(integer: ++tapCount), withIdentifier: "watchTap")
+    var tapCount = 0 {
+        didSet {
+            passTapCount(tapCount)
+        }
     }
+
+    @IBAction func plus() {
+        ++tapCount
+    }
+
+    @IBAction func minus() {
+        --tapCount
+    }
+
+    @IBAction func clean() {
+        tapCount = 0
+
+        //wormhole.clearMessageForIdentifier("watchTap")
+        wormhole.clearAllMessages()
+    }
+
+    func passTapCount(tapCount: Int) {
+        wormhole.passMessage(NSNumber(integer: tapCount), withIdentifier: "watchTap")
+    }
+
 }

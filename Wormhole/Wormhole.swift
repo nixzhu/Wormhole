@@ -9,11 +9,17 @@
 import Foundation
 
 public class Wormhole: NSObject {
-    let appGroupIdentifier: String
-    let messageDirectoryName: String?
 
-    public init(appGroupIdentifier: String, messageDirectoryName: String?) {
+    let appGroupIdentifier: String
+    let messageDirectoryName: String
+
+    public init(appGroupIdentifier: String, messageDirectoryName: String) {
         self.appGroupIdentifier = appGroupIdentifier
+
+        if messageDirectoryName.isEmpty {
+            fatalError("ERROR: Wormhole need a message passing directory")
+        }
+
         self.messageDirectoryName = messageDirectoryName
     }
 
@@ -48,6 +54,26 @@ public class Wormhole: NSObject {
         }
     }
 
+    public func clearMessageForIdentifier(identifier: String) {
+        deleteFileOfMessageWithIdentifier(identifier)
+    }
+
+    public func clearAllMessages() {
+        if let directoryPath = messagePassingDirectoryPath() {
+
+            let fileManager = NSFileManager.defaultManager()
+
+            if let fileNames = fileManager.contentsOfDirectoryAtPath(directoryPath, error: nil) as? [String] {
+
+                for fileName in fileNames {
+                    let filePath = directoryPath.stringByAppendingPathComponent(fileName)
+
+                    fileManager.removeItemAtPath(filePath, error: nil)
+                }
+            }
+        }
+    }
+
     // in
 
     func writeMessage(message: Message, withIdentifier identifier: String) {
@@ -61,6 +87,13 @@ public class Wormhole: NSObject {
 
         if success {
             notifyForMessageWithIdentifier(identifier)
+        }
+    }
+
+    func deleteFileOfMessageWithIdentifier(identifier: String) {
+        if let filePath = filePathForIdentifier(identifier) {
+            let fileManager = NSFileManager.defaultManager()
+            fileManager.removeItemAtPath(filePath, error: nil)
         }
     }
 
@@ -86,10 +119,7 @@ public class Wormhole: NSObject {
         if let
             appGroupContainer = fileManager.containerURLForSecurityApplicationGroupIdentifier(self.appGroupIdentifier),
             appGroupContainerPath = appGroupContainer.path {
-                var directoryPath = appGroupContainerPath
-                if let messageDirectoryName = messageDirectoryName {
-                    directoryPath = directoryPath.stringByAppendingPathComponent(messageDirectoryName)
-                }
+                let directoryPath = appGroupContainerPath.stringByAppendingPathComponent(messageDirectoryName)
 
                 fileManager.createDirectoryAtPath(directoryPath, withIntermediateDirectories: true, attributes: nil, error: nil)
 
@@ -113,6 +143,7 @@ public class Wormhole: NSObject {
     func notifyForMessageWithIdentifier(identifier: String) {
         if let center = CFNotificationCenterGetDarwinNotifyCenter() {
             CFNotificationCenterPostNotification(center, identifier, nil, nil, 1)
+            println("notifyForMessageWithIdentifier \(identifier)")
         }
     }
 }

@@ -10,13 +10,36 @@
             <objects>
                 <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="Remote_WatchKit_App" customModuleProvider="target">
                     <items>
-                        <button width="1" height="1" alignment="left" title="Tap me" id="V0s-UN-dse">
-                            <color key="titleColor" red="0.40000000600000002" green="1" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
-                            <fontDescription key="font" type="system" pointSize="30"/>
-                            <connections>
-                                <action selector="tap" destination="AgC-eL-Hgc" id="YXj-eJ-FbI"/>
-                            </connections>
-                        </button>
+                        <group width="1" height="1" alignment="left" layout="vertical" id="gWF-t1-7O3">
+                            <items>
+                                <button width="1" height="0.5" alignment="left" title="+" id="V0s-UN-dse">
+                                    <color key="titleColor" red="0.40000000600000002" green="1" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" red="0.40000000600000002" green="1" blue="0.40000000600000002" alpha="0.25" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="font" type="system" weight="medium" pointSize="100"/>
+                                    <connections>
+                                        <action selector="plus" destination="AgC-eL-Hgc" id="hqG-fd-3dH"/>
+                                    </connections>
+                                </button>
+                                <group width="1" height="0.5" alignment="left" id="6jN-Eb-ScD">
+                                    <items>
+                                        <button width="0.5" height="1" alignment="left" title="-" id="UvP-7i-1y2">
+                                            <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="0.25" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="font" type="system" weight="medium" pointSize="80"/>
+                                            <connections>
+                                                <action selector="minus" destination="AgC-eL-Hgc" id="UTM-tn-bj3"/>
+                                            </connections>
+                                        </button>
+                                        <button width="0.5" height="1" alignment="left" title="Clean" id="MFk-vZ-VK8">
+                                            <fontDescription key="font" type="system" pointSize="15"/>
+                                            <connections>
+                                                <action selector="clean" destination="AgC-eL-Hgc" id="51e-pd-LfK"/>
+                                            </connections>
+                                        </button>
+                                    </items>
+                                </group>
+                            </items>
+                        </group>
                     </items>
                 </controller>
             </objects>
