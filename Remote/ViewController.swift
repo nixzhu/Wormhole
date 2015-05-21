@@ -11,6 +11,7 @@ import Wormhole
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var redCountLabel: UILabel!
     @IBOutlet weak var countLabel: UILabel!
 
     let wormhole = Wormhole(appGroupIdentifier: "group.com.nixWork.Wormhole", messageDirectoryName: "Wormhole")
@@ -25,5 +26,17 @@ class ViewController: UIViewController {
         }
 
         wormhole.bindListener(listener, forMessageWithIdentifier: "watchTap")
+
+        let listener2: Wormhole.Listener = { [unowned self] message in
+            if let tapCount = message as? NSNumber {
+                self.redCountLabel.text = "\(tapCount.integerValue)"
+            }
+        }
+
+        wormhole.bindListener(listener2, forMessageWithIdentifier: "watchTap")
+    }
+
+    @IBAction func stop(sender: UIButton) {
+        wormhole.stopListeningForMessageWithIdentifier("watchTap")
     }
 }

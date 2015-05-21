@@ -54,6 +54,12 @@ public class Wormhole: NSObject {
         }
     }
 
+    public func stopListeningForMessageWithIdentifier(identifier: String) {
+        if let center = CFNotificationCenterGetDarwinNotifyCenter() {
+            CFNotificationCenterRemoveObserver(center, unsafeAddressOf(self), identifier, nil)
+        }
+    }
+
     public func clearMessageForIdentifier(identifier: String) {
         deleteFileOfMessageWithIdentifier(identifier)
     }
