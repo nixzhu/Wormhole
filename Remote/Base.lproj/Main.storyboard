@@ -16,55 +16,30 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UPJ-LR-bN4" userLabel="Red Count Label">
-                                <rect key="frame" x="273" y="112" width="55" height="120"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="100"/>
-                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Level 2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mYX-S1-Zid">
+                                <rect key="frame" x="273" y="289" width="55" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MES-dT-pOT" userLabel="Blue Count Label">
-                                <rect key="frame" x="273" y="240" width="55" height="120"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="100"/>
-                                <color key="textColor" red="0.13725490200000001" green="0.56862745100000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Light Off" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ybi-It-qix">
+                                <rect key="frame" x="267" y="248" width="66" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7At-EV-6tc">
-                                <rect key="frame" x="249" y="390" width="103" height="48"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <state key="normal" title="Stop All">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="stopAll:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="XOS-qR-n68"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1SQ-Ir-GBr">
-                                <rect key="frame" x="358" y="276" width="96" height="48"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <state key="normal" title="Unbind">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="unbind:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="B3A-0b-VQ5"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="7At-EV-6tc" firstAttribute="top" secondItem="MES-dT-pOT" secondAttribute="bottom" constant="30" id="0cu-Gc-dQO"/>
-                            <constraint firstItem="1SQ-Ir-GBr" firstAttribute="leading" secondItem="MES-dT-pOT" secondAttribute="trailing" constant="30" id="300-3z-v84"/>
-                            <constraint firstAttribute="centerX" secondItem="MES-dT-pOT" secondAttribute="centerX" id="KJW-ov-KhC"/>
-                            <constraint firstItem="7At-EV-6tc" firstAttribute="centerX" secondItem="MES-dT-pOT" secondAttribute="centerX" id="WX7-bH-P79"/>
-                            <constraint firstAttribute="centerY" secondItem="MES-dT-pOT" secondAttribute="centerY" id="hK6-L4-TYd"/>
-                            <constraint firstItem="MES-dT-pOT" firstAttribute="top" secondItem="UPJ-LR-bN4" secondAttribute="bottom" constant="8" id="hoD-mj-Ubn"/>
-                            <constraint firstItem="MES-dT-pOT" firstAttribute="centerX" secondItem="UPJ-LR-bN4" secondAttribute="centerX" id="oKi-uU-udc"/>
-                            <constraint firstItem="1SQ-Ir-GBr" firstAttribute="centerY" secondItem="MES-dT-pOT" secondAttribute="centerY" id="opN-6m-bzV"/>
+                            <constraint firstAttribute="centerY" secondItem="mYX-S1-Zid" secondAttribute="centerY" id="Y8C-Fs-6fb"/>
+                            <constraint firstAttribute="centerX" secondItem="mYX-S1-Zid" secondAttribute="centerX" id="aGV-h8-WC8"/>
+                            <constraint firstItem="mYX-S1-Zid" firstAttribute="top" secondItem="ybi-It-qix" secondAttribute="bottom" constant="20" id="iTf-7n-eBQ"/>
+                            <constraint firstItem="mYX-S1-Zid" firstAttribute="centerX" secondItem="ybi-It-qix" secondAttribute="centerX" id="wMQ-Qn-yMo"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="blueCountLabel" destination="MES-dT-pOT" id="bUc-qj-ZfM"/>
-                        <outlet property="redCountLabel" destination="UPJ-LR-bN4" id="XV3-t5-vfK"/>
+                        <outlet property="lightLevelsLabel" destination="mYX-S1-Zid" id="rvY-3r-sHU"/>
+                        <outlet property="lightStateLabel" destination="ybi-It-qix" id="Kik-DK-fOx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

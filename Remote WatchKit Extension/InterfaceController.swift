@@ -16,43 +16,36 @@ class InterfaceController: WKInterfaceController {
 
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
-        
-        // Configure interface objects here.
     }
 
     override func willActivate() {
-        // This method is called when watch view controller is about to be visible to user
         super.willActivate()
     }
 
     override func didDeactivate() {
-        // This method is called when watch view controller is no longer visible
         super.didDeactivate()
     }
 
-    var tapCount = 0 {
+    typealias LightState = Bool
+
+    var lightState: LightState = false {
         didSet {
-            passTapCount(tapCount)
+            wormhole.passMessage(NSNumber(bool: lightState), withIdentifier: "lightState")
         }
     }
 
-    @IBAction func plus() {
-        ++tapCount
+    var lightLevels: Float = 2 {
+        didSet {
+            wormhole.passMessage(NSNumber(float: lightLevels), withIdentifier: "lightLevels")
+        }
     }
 
-    @IBAction func minus() {
-        --tapCount
+    @IBAction func switchLight(value: Bool) {
+        lightState = value
     }
 
-    @IBAction func clean() {
-        tapCount = 0
-
-        //wormhole.cleanMessageWithIdentifier("watchTap")
-        wormhole.cleanAllMessages()
+    @IBAction func changeLightLevels(value: Float) {
+        println(value)
+        lightLevels = value
     }
-
-    func passTapCount(tapCount: Int) {
-        wormhole.passMessage(NSNumber(integer: tapCount), withIdentifier: "watchTap")
-    }
-
 }

@@ -11,31 +11,31 @@ import Wormhole
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var redCountLabel: UILabel!
-    @IBOutlet weak var blueCountLabel: UILabel!
+    @IBOutlet weak var lightStateLabel: UILabel!
+    @IBOutlet weak var lightLevelsLabel: UILabel!
 
     let wormhole = Wormhole(appGroupIdentifier: "group.com.nixWork.Wormhole", messageDirectoryName: "Wormhole")
 
-    lazy var redListener: Wormhole.Listener = {
+    lazy var lightStateListener: Wormhole.Listener = {
         let action: Wormhole.Listener.Action = { [unowned self] message in
-            if let tapCount = message as? NSNumber {
-                self.redCountLabel.text = "\(tapCount.integerValue)"
+            if let lightState = message as? NSNumber {
+                self.lightStateLabel.text = lightState.boolValue ? "Light On" : "Light Off"
             }
         }
 
-        let listener = Wormhole.Listener(name: "redCountLabel", action: action)
+        let listener = Wormhole.Listener(name: "lightStateLabel", action: action)
 
         return listener
         }()
 
-    lazy var blueListener: Wormhole.Listener = {
+    lazy var lightLevelsListener: Wormhole.Listener = {
         let action: Wormhole.Listener.Action = { [unowned self] message in
-            if let tapCount = message as? NSNumber {
-                self.blueCountLabel.text = "\(tapCount.integerValue)"
+            if let lightLevels = message as? NSNumber {
+                self.lightLevelsLabel.text = "Level \(lightLevels.integerValue)"
             }
         }
 
-        let listener = Wormhole.Listener(name: "blueCountLabel", action: action)
+        let listener = Wormhole.Listener(name: "lightLevelsLabel", action: action)
 
         return listener
         }()
@@ -43,17 +43,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        wormhole.bindListener(redListener, forMessageWithIdentifier: "watchTap")
+        wormhole.bindListener(lightStateListener, forMessageWithIdentifier: "lightState")
 
-        wormhole.bindListener(blueListener, forMessageWithIdentifier: "watchTap")
+        wormhole.bindListener(lightLevelsListener, forMessageWithIdentifier: "lightLevels")
     }
-
-    @IBAction func stopAll(sender: UIButton) {
-        wormhole.removeAllListenersForMessageWithIdentifier("watchTap")
-    }
-
-    @IBAction func unbind(sender: UIButton) {
-        wormhole.removeListener(blueListener, forMessageWithIdentifier: "watchTap")
-    }
-
 }
