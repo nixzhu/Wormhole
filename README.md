@@ -25,8 +25,8 @@ lazy var lightStateListener: Wormhole.Listener = {
     let action: Wormhole.Listener.Action = { [unowned self] message in
         if let lightState = message as? NSNumber {
             self.lightStateLabel.text = lightState.boolValue ? "Light On" : "Light Off"
-            }
         }
+    }
 
     let listener = Wormhole.Listener(name: "lightStateLabel", action: action)
 
@@ -35,6 +35,8 @@ lazy var lightStateListener: Wormhole.Listener = {
      
 wormhole.bindListener(lightStateListener, forMessageWithIdentifier: "lightState")
 ```
+
+Of course, the reverse path is the same.
 
 ## License
 
