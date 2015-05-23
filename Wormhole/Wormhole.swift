@@ -8,8 +8,8 @@
 
 import Foundation
 
-public func ==(lhs: Wormhole.MessageListener, rhs: Wormhole.MessageListener) -> Bool {
-    return (lhs.messageIdentifier == rhs.messageIdentifier) && (lhs.hashValue == rhs.hashValue)
+func ==(lhs: Wormhole.MessageListener, rhs: Wormhole.MessageListener) -> Bool {
+    return lhs.hashValue == rhs.hashValue
 }
 
 public class Wormhole: NSObject {
@@ -18,6 +18,7 @@ public class Wormhole: NSObject {
     let messageDirectoryName: String
 
     public init(appGroupIdentifier: String, messageDirectoryName: String) {
+
         self.appGroupIdentifier = appGroupIdentifier
 
         if messageDirectoryName.isEmpty {
@@ -36,10 +37,28 @@ public class Wormhole: NSObject {
     public typealias Message = NSCoding
 
     public func passMessage(message: Message, withIdentifier identifier: String) {
-        writeMessage(message, withIdentifier: identifier)
+
+        if identifier.isEmpty {
+            fatalError("ERROR: Message need identifier")
+        }
+
+        var success = false
+
+        if let filePath = filePathForIdentifier(identifier) {
+            let data = NSKeyedArchiver.archivedDataWithRootObject(message)
+            success = data.writeToFile(filePath, atomically: true)
+        }
+
+        if success {
+            if let center = CFNotificationCenterGetDarwinNotifyCenter() {
+                CFNotificationCenterPostNotification(center, identifier, nil, nil, 1)
+                println("notifyForMessageWithIdentifier \(identifier)")
+            }
+        }
     }
 
     public struct Listener {
+
         public typealias Action = Message -> Void
 
         let name: String
@@ -51,18 +70,20 @@ public class Wormhole: NSObject {
         }
     }
 
-    public struct MessageListener: Hashable {
+    struct MessageListener: Hashable {
+
         let messageIdentifier: String
         let listener: Listener
 
-        public var hashValue: Int {
-            return (messageIdentifier + listener.name).hashValue
+        var hashValue: Int {
+            return (messageIdentifier + "<nixzhu.Wormhole>" + listener.name).hashValue
         }
     }
 
     var messageListenerSet = Set<MessageListener>()
 
     public func bindListener(listener: Listener, forMessageWithIdentifier identifier: String) {
+
         if let center = CFNotificationCenterGetDarwinNotifyCenter() {
 
             let messageListener = MessageListener(messageIdentifier: identifier, listener: listener)
@@ -84,22 +105,35 @@ public class Wormhole: NSObject {
         }
     }
 
-    public func unbindListener(listener: Listener, forMessageWithIdentifier identifier: String) {
+    public func removeListener(listener: Listener, forMessageWithIdentifier identifier: String) {
+
         let messageListener = MessageListener(messageIdentifier: identifier, listener: listener)
         self.messageListenerSet.remove(messageListener)
     }
 
-    public func stopListeningForMessageWithIdentifier(identifier: String) {
+    public func removeAllListenersForMessageWithIdentifier(identifier: String) {
+
         if let center = CFNotificationCenterGetDarwinNotifyCenter() {
             CFNotificationCenterRemoveObserver(center, unsafeAddressOf(self), identifier, nil)
+
+            for listener in messageListenerSet {
+                if listener.messageIdentifier == identifier {
+                    messageListenerSet.remove(listener)
+                }
+            }
         }
     }
 
-    public func clearMessageForIdentifier(identifier: String) {
-        deleteFileOfMessageWithIdentifier(identifier)
+    public func cleanMessageWithIdentifier(identifier: String) {
+
+        if let filePath = filePathForIdentifier(identifier) {
+            let fileManager = NSFileManager.defaultManager()
+            fileManager.removeItemAtPath(filePath, error: nil)
+        }
     }
 
-    public func clearAllMessages() {
+    public func cleanAllMessages() {
+
         if let directoryPath = messagePassingDirectoryPath() {
 
             let fileManager = NSFileManager.defaultManager()
@@ -108,37 +142,16 @@ public class Wormhole: NSObject {
 
                 for fileName in fileNames {
                     let filePath = directoryPath.stringByAppendingPathComponent(fileName)
-
                     fileManager.removeItemAtPath(filePath, error: nil)
                 }
             }
         }
     }
 
-    // in
-
-    func writeMessage(message: Message, withIdentifier identifier: String) {
-
-        var success = false
-
-        if let filePath = filePathForIdentifier(identifier) {
-            let data = NSKeyedArchiver.archivedDataWithRootObject(message)
-            success = data.writeToFile(filePath, atomically: true)
-        }
-
-        if success {
-            notifyForMessageWithIdentifier(identifier)
-        }
-    }
-
-    func deleteFileOfMessageWithIdentifier(identifier: String) {
-        if let filePath = filePathForIdentifier(identifier) {
-            let fileManager = NSFileManager.defaultManager()
-            fileManager.removeItemAtPath(filePath, error: nil)
-        }
-    }
+    // MARK: Helpers
 
     func filePathForIdentifier(identifier: String) -> String? {
+
         if identifier.isEmpty {
             return nil
         }
@@ -171,6 +184,7 @@ public class Wormhole: NSObject {
     }
 
     func messageFromFileWithIdentifier(identifier: String) -> Message? {
+
         if let
             filePath = filePathForIdentifier(identifier),
             data = NSData(contentsOfFile: filePath),
@@ -179,12 +193,5 @@ public class Wormhole: NSObject {
         }
 
         return nil
-    }
-
-    func notifyForMessageWithIdentifier(identifier: String) {
-        if let center = CFNotificationCenterGetDarwinNotifyCenter() {
-            CFNotificationCenterPostNotification(center, identifier, nil, nil, 1)
-            println("notifyForMessageWithIdentifier \(identifier)")
-        }
     }
 }

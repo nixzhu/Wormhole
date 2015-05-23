@@ -49,11 +49,11 @@ class ViewController: UIViewController {
     }
 
     @IBAction func stopAll(sender: UIButton) {
-        wormhole.stopListeningForMessageWithIdentifier("watchTap")
+        wormhole.removeAllListenersForMessageWithIdentifier("watchTap")
     }
 
     @IBAction func unbind(sender: UIButton) {
-        wormhole.unbindListener(blueListener, forMessageWithIdentifier: "watchTap")
+        wormhole.removeListener(blueListener, forMessageWithIdentifier: "watchTap")
     }
 
 }
