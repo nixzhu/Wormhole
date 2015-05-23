@@ -102,6 +102,13 @@ public class Wormhole: NSObject {
             let callBack: CFNotificationCallback = unsafeBitCast(imp, CFNotificationCallback.self)
 
             CFNotificationCenterAddObserver(center, unsafeAddressOf(self), callBack, identifier, nil, CFNotificationSuspensionBehavior.DeliverImmediately)
+
+
+            // Try fire Listener's action
+
+            if let message = messageFromFileWithIdentifier(identifier) {
+                listener.action(message)
+            }
         }
     }
 
