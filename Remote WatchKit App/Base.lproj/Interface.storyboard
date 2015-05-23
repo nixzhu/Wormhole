@@ -26,6 +26,10 @@
                             </items>
                         </group>
                     </items>
+                    <connections>
+                        <outlet property="lightLevelsSlider" destination="JMt-Ao-Ae1" id="M6h-mi-Rur"/>
+                        <outlet property="lightStateSwitch" destination="2eb-02-dk2" id="gdf-L6-IKs"/>
+                    </connections>
                 </controller>
             </objects>
         </scene>

@@ -155,6 +155,18 @@ public class Wormhole: NSObject {
         }
     }
 
+    public func messageFromFileWithIdentifier(identifier: String) -> Message? {
+
+        if let
+            filePath = filePathForIdentifier(identifier),
+            data = NSData(contentsOfFile: filePath),
+            message = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? Message {
+                return message
+        }
+
+        return nil
+    }
+
     // MARK: Helpers
 
     func filePathForIdentifier(identifier: String) -> String? {
@@ -190,15 +202,4 @@ public class Wormhole: NSObject {
         return nil
     }
 
-    func messageFromFileWithIdentifier(identifier: String) -> Message? {
-
-        if let
-            filePath = filePathForIdentifier(identifier),
-            data = NSData(contentsOfFile: filePath),
-            message = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? Message {
-                return message
-        }
-
-        return nil
-    }
 }
