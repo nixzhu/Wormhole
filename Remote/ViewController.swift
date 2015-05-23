@@ -12,9 +12,28 @@ import Wormhole
 class ViewController: UIViewController {
 
     @IBOutlet weak var lightStateLabel: UILabel!
+    @IBOutlet weak var lightStateLockButton: UIButton!
+
     @IBOutlet weak var lightLevelsLabel: UILabel!
 
     let wormhole = Wormhole(appGroupIdentifier: "group.com.nixWork.Wormhole", messageDirectoryName: "Wormhole")
+
+    var lightStateLocked = false {
+        didSet {
+
+            if lightStateLocked {
+                lightStateLockButton.setTitle("Unlock", forState: .Normal)
+
+                wormhole.removeListenerByName("lightStateLabel", forMessageWithIdentifier: "lightState")
+
+            } else {
+                lightStateLockButton.setTitle("Lock", forState: .Normal)
+
+                wormhole.bindListener(lightStateListener, forMessageWithIdentifier: "lightState")
+            }
+
+        }
+    }
 
     lazy var lightStateListener: Wormhole.Listener = {
         let action: Wormhole.Listener.Action = { [unowned self] message in
@@ -47,4 +66,12 @@ class ViewController: UIViewController {
 
         wormhole.bindListener(lightLevelsListener, forMessageWithIdentifier: "lightLevels")
     }
+
+    // MARK: Actions
+
+    @IBAction func lockOrUnlockLightState(sender: UIButton) {
+        lightStateLocked = !lightStateLocked
+    }
+
 }
+

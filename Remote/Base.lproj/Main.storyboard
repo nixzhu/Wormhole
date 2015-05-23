@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -28,18 +29,30 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fH2-xM-UYJ">
+                                <rect key="frame" x="360" y="244" width="34" height="30"/>
+                                <state key="normal" title="Lock">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="lockOrUnlockLightState:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="ODF-j6-V7c"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="fH2-xM-UYJ" firstAttribute="leading" secondItem="ybi-It-qix" secondAttribute="centerX" constant="60" id="Oig-GZ-dfX"/>
                             <constraint firstAttribute="centerY" secondItem="mYX-S1-Zid" secondAttribute="centerY" id="Y8C-Fs-6fb"/>
                             <constraint firstAttribute="centerX" secondItem="mYX-S1-Zid" secondAttribute="centerX" id="aGV-h8-WC8"/>
                             <constraint firstItem="mYX-S1-Zid" firstAttribute="top" secondItem="ybi-It-qix" secondAttribute="bottom" constant="20" id="iTf-7n-eBQ"/>
+                            <constraint firstItem="fH2-xM-UYJ" firstAttribute="centerY" secondItem="ybi-It-qix" secondAttribute="centerY" constant="0.5" id="ug2-hJ-dp2"/>
                             <constraint firstItem="mYX-S1-Zid" firstAttribute="centerX" secondItem="ybi-It-qix" secondAttribute="centerX" id="wMQ-Qn-yMo"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="lightLevelsLabel" destination="mYX-S1-Zid" id="rvY-3r-sHU"/>
                         <outlet property="lightStateLabel" destination="ybi-It-qix" id="Kik-DK-fOx"/>
+                        <outlet property="lightStateLockButton" destination="fH2-xM-UYJ" id="dCc-GN-hEU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

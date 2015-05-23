@@ -115,7 +115,18 @@ public class Wormhole: NSObject {
     public func removeListener(listener: Listener, forMessageWithIdentifier identifier: String) {
 
         let messageListener = MessageListener(messageIdentifier: identifier, listener: listener)
-        self.messageListenerSet.remove(messageListener)
+        messageListenerSet.remove(messageListener)
+    }
+
+    public func removeListenerByName(name: String, forMessageWithIdentifier identifier: String) {
+
+        for messageListener in messageListenerSet {
+            if messageListener.messageIdentifier == identifier && messageListener.listener.name == name {
+                messageListenerSet.remove(messageListener)
+
+                break
+            }
+        }
     }
 
     public func removeAllListenersForMessageWithIdentifier(identifier: String) {
