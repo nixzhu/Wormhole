@@ -24,13 +24,13 @@ class InterfaceController: WKInterfaceController {
     override func willActivate() {
         super.willActivate()
 
-        if let message = wormhole.messageFromFileWithIdentifier("lightState") {
+        if let message = wormhole.messageWithIdentifier("lightState") {
             if let lightState = message as? NSNumber {
                 lightStateSwitch.setOn(lightState.boolValue)
             }
         }
 
-        if let message = wormhole.messageFromFileWithIdentifier("lightLevels") {
+        if let message = wormhole.messageWithIdentifier("lightLevels") {
             if let lightLevels = message as? NSNumber {
                 lightLevelsSlider.setValue(lightLevels.floatValue)
             }

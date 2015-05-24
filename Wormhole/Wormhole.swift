@@ -91,7 +91,7 @@ public class Wormhole: NSObject {
 
             let block: @objc_block (CFNotificationCenter!, UnsafeMutablePointer<Void>, CFString!, UnsafePointer<Void>, CFDictionary!) -> Void = { _, _, _, _, _ in
 
-                if let message = self.messageFromFileWithIdentifier(identifier) {
+                if let message = self.messageWithIdentifier(identifier) {
                     if self.messageListenerSet.contains(messageListener) {
                         messageListener.listener.action(message)
                     }
@@ -106,7 +106,7 @@ public class Wormhole: NSObject {
 
             // Try fire Listener's action
 
-            if let message = messageFromFileWithIdentifier(identifier) {
+            if let message = messageWithIdentifier(identifier) {
                 listener.action(message)
             }
         }
@@ -142,6 +142,18 @@ public class Wormhole: NSObject {
         }
     }
 
+    public func messageWithIdentifier(identifier: String) -> Message? {
+
+        if let
+            filePath = filePathForIdentifier(identifier),
+            data = NSData(contentsOfFile: filePath),
+            message = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? Message {
+                return message
+        }
+
+        return nil
+    }
+
     public func cleanMessageWithIdentifier(identifier: String) {
 
         if let filePath = filePathForIdentifier(identifier) {
@@ -164,18 +176,6 @@ public class Wormhole: NSObject {
                 }
             }
         }
-    }
-
-    public func messageFromFileWithIdentifier(identifier: String) -> Message? {
-
-        if let
-            filePath = filePathForIdentifier(identifier),
-            data = NSData(contentsOfFile: filePath),
-            message = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? Message {
-                return message
-        }
-
-        return nil
     }
 
     // MARK: Helpers
