@@ -36,30 +36,36 @@ public class Wormhole: NSObject {
 
     public typealias Message = NSCoding
 
-    public func passMessage(message: Message, withIdentifier identifier: String) {
+    public func passMessage(message: Message?, withIdentifier identifier: String) {
 
         if identifier.isEmpty {
             fatalError("ERROR: Message need identifier")
         }
 
-        var success = false
+        if let message = message {
+            var success = false
 
-        if let filePath = filePathForIdentifier(identifier) {
-            let data = NSKeyedArchiver.archivedDataWithRootObject(message)
-            success = data.writeToFile(filePath, atomically: true)
-        }
+            if let filePath = filePathForIdentifier(identifier) {
+                let data = NSKeyedArchiver.archivedDataWithRootObject(message)
+                success = data.writeToFile(filePath, atomically: true)
+            }
 
-        if success {
+            if success {
+                if let center = CFNotificationCenterGetDarwinNotifyCenter() {
+                    CFNotificationCenterPostNotification(center, identifier, nil, nil, 1)
+                }
+            }
+
+        } else {
             if let center = CFNotificationCenterGetDarwinNotifyCenter() {
                 CFNotificationCenterPostNotification(center, identifier, nil, nil, 1)
-                println("notifyForMessageWithIdentifier \(identifier)")
             }
         }
     }
 
     public struct Listener {
 
-        public typealias Action = Message -> Void
+        public typealias Action = Message? -> Void
 
         let name: String
         let action: Action
@@ -91,10 +97,8 @@ public class Wormhole: NSObject {
 
             let block: @objc_block (CFNotificationCenter!, UnsafeMutablePointer<Void>, CFString!, UnsafePointer<Void>, CFDictionary!) -> Void = { _, _, _, _, _ in
 
-                if let message = self.messageWithIdentifier(identifier) {
-                    if self.messageListenerSet.contains(messageListener) {
-                        messageListener.listener.action(message)
-                    }
+                if self.messageListenerSet.contains(messageListener) {
+                    messageListener.listener.action(self.messageWithIdentifier(identifier))
                 }
             }
 
@@ -104,11 +108,9 @@ public class Wormhole: NSObject {
             CFNotificationCenterAddObserver(center, unsafeAddressOf(self), callBack, identifier, nil, CFNotificationSuspensionBehavior.DeliverImmediately)
 
 
-            // Try fire Listener's action
+            // Try fire Listener's action for first time
 
-            if let message = messageWithIdentifier(identifier) {
-                listener.action(message)
-            }
+            listener.action(messageWithIdentifier(identifier))
         }
     }
 
