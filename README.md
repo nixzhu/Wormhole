@@ -1,6 +1,6 @@
 # Wormhole
 
-Wormhole is a Swift port of [MMWormhole](https://github.com/mutualmobile/MMWormhole) but with better API and use logic. You can remove any a listener from it separately.
+Wormhole is not just a Swift port of [MMWormhole](https://github.com/mutualmobile/MMWormhole) but with better API and use logic. You can remove any a listener from it separately.
 
 ## Example
 
