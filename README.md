@@ -36,7 +36,18 @@ lazy var lightStateListener: Wormhole.Listener = {
 wormhole.bindListener(lightStateListener, forMessageWithIdentifier: "lightState")
 ```
 
-Of course, the reverse path is the same.
+Now easy to remove a listener:
+
+```Swift
+wormhole.removeListener(lightStateListener, forMessageWithIdentifier: "lightState")
+```
+or
+
+```Swift
+wormhole.removeListenerByName("lightStateLabel", forMessageWithIdentifier: "lightState")
+```
+
+For more information, see the demo.
 
 ## License
 
