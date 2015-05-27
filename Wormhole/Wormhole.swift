@@ -156,7 +156,7 @@ public class Wormhole: NSObject {
         return nil
     }
 
-    public func cleanMessageWithIdentifier(identifier: String) {
+    public func destroyMessageWithIdentifier(identifier: String) {
 
         if let filePath = filePathForIdentifier(identifier) {
             let fileManager = NSFileManager.defaultManager()
@@ -164,7 +164,7 @@ public class Wormhole: NSObject {
         }
     }
 
-    public func cleanAllMessages() {
+    public func destroyAllMessages() {
 
         if let directoryPath = messagePassingDirectoryPath() {
 
