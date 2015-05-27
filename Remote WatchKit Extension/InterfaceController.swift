@@ -7,15 +7,15 @@
 //
 
 import WatchKit
-import Foundation
 import Wormhole
+import RemoteKit
 
 class InterfaceController: WKInterfaceController {
 
     @IBOutlet weak var lightStateSwitch: WKInterfaceSwitch!
-    @IBOutlet weak var lightLevelsSlider: WKInterfaceSlider!
+    @IBOutlet weak var lightLevelSlider: WKInterfaceSlider!
 
-    let wormhole = Wormhole(appGroupIdentifier: "group.com.nixWork.Wormhole", messageDirectoryName: "Wormhole")
+    let wormhole = Wormhole(appGroupIdentifier: Config.Wormhole.appGroupIdentifier, messageDirectoryName: Config.Wormhole.messageDirectoryName)
 
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
@@ -24,15 +24,15 @@ class InterfaceController: WKInterfaceController {
     override func willActivate() {
         super.willActivate()
 
-        if let message = wormhole.messageWithIdentifier("lightState") {
+        if let message = wormhole.messageWithIdentifier(Config.Wormhole.Message.lightState) {
             if let lightState = message as? NSNumber {
                 lightStateSwitch.setOn(lightState.boolValue)
             }
         }
 
-        if let message = wormhole.messageWithIdentifier("lightLevels") {
-            if let lightLevels = message as? NSNumber {
-                lightLevelsSlider.setValue(lightLevels.floatValue)
+        if let message = wormhole.messageWithIdentifier(Config.Wormhole.Message.lightLevel) {
+            if let lightLevel = message as? NSNumber {
+                lightLevelSlider.setValue(lightLevel.floatValue)
             }
         }
     }
@@ -45,13 +45,13 @@ class InterfaceController: WKInterfaceController {
 
     var lightState: LightState = false {
         didSet {
-            wormhole.passMessage(NSNumber(bool: lightState), withIdentifier: "lightState")
+            wormhole.passMessage(NSNumber(bool: lightState), withIdentifier: Config.Wormhole.Message.lightState)
         }
     }
 
     var lightLevels: Float = 2 {
         didSet {
-            wormhole.passMessage(NSNumber(float: lightLevels), withIdentifier: "lightLevels")
+            wormhole.passMessage(NSNumber(float: lightLevels), withIdentifier: Config.Wormhole.Message.lightLevel)
         }
     }
 

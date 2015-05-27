@@ -25,6 +25,12 @@
 		502048181B0C97D0002EBFC7 /* Wormhole.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502048011B0C97D0002EBFC7 /* Wormhole.framework */; };
 		502048191B0C97D0002EBFC7 /* Wormhole.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 502048011B0C97D0002EBFC7 /* Wormhole.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		502048221B0C97F1002EBFC7 /* Wormhole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502048211B0C97F1002EBFC7 /* Wormhole.swift */; };
+		5054986D1B1574B40037E3BD /* RemoteKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 5054986C1B1574B40037E3BD /* RemoteKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		505498731B1574B40037E3BD /* RemoteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 505498681B1574B30037E3BD /* RemoteKit.framework */; };
+		5054987C1B1574B40037E3BD /* RemoteKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054987B1B1574B40037E3BD /* RemoteKitTests.swift */; };
+		5054987F1B1574B40037E3BD /* RemoteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 505498681B1574B30037E3BD /* RemoteKit.framework */; };
+		505498801B1574B40037E3BD /* RemoteKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 505498681B1574B30037E3BD /* RemoteKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		505498881B15750C0037E3BD /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505498871B15750C0037E3BD /* Config.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +76,27 @@
 			remoteGlobalIDString = 502048001B0C97D0002EBFC7;
 			remoteInfo = Wormhole;
 		};
+		505498741B1574B40037E3BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 502047A91B0C971B002EBFC7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 505498671B1574B30037E3BD;
+			remoteInfo = RemoteKit;
+		};
+		505498761B1574B40037E3BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 502047A91B0C971B002EBFC7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 502047B01B0C971B002EBFC7;
+			remoteInfo = Remote;
+		};
+		5054987D1B1574B40037E3BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 502047A91B0C971B002EBFC7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 505498671B1574B30037E3BD;
+			remoteInfo = RemoteKit;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -91,6 +118,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				502048191B0C97D0002EBFC7 /* Wormhole.framework in Embed Frameworks */,
+				505498801B1574B40037E3BD /* RemoteKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -125,6 +153,13 @@
 		502048131B0C97D0002EBFC7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		502048141B0C97D0002EBFC7 /* WormholeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WormholeTests.swift; sourceTree = "<group>"; };
 		502048211B0C97F1002EBFC7 /* Wormhole.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wormhole.swift; sourceTree = "<group>"; };
+		505498681B1574B30037E3BD /* RemoteKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RemoteKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5054986B1B1574B40037E3BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5054986C1B1574B40037E3BD /* RemoteKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemoteKit.h; sourceTree = "<group>"; };
+		505498721B1574B40037E3BD /* RemoteKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RemoteKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5054987A1B1574B40037E3BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5054987B1B1574B40037E3BD /* RemoteKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteKitTests.swift; sourceTree = "<group>"; };
+		505498871B15750C0037E3BD /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +168,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				502048181B0C97D0002EBFC7 /* Wormhole.framework in Frameworks */,
+				5054987F1B1574B40037E3BD /* RemoteKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,6 +201,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		505498641B1574B30037E3BD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5054986F1B1574B40037E3BD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				505498731B1574B40037E3BD /* RemoteKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -177,6 +228,8 @@
 				502047E81B0C973D002EBFC7 /* Remote WatchKit App */,
 				502048021B0C97D0002EBFC7 /* Wormhole */,
 				502048111B0C97D0002EBFC7 /* WormholeTests */,
+				505498691B1574B30037E3BD /* RemoteKit */,
+				505498781B1574B40037E3BD /* RemoteKitTests */,
 				502047B21B0C971B002EBFC7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -190,6 +243,8 @@
 				502047E41B0C973D002EBFC7 /* Remote WatchKit App.app */,
 				502048011B0C97D0002EBFC7 /* Wormhole.framework */,
 				5020480B1B0C97D0002EBFC7 /* WormholeTests.xctest */,
+				505498681B1574B30037E3BD /* RemoteKit.framework */,
+				505498721B1574B40037E3BD /* RemoteKitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -305,6 +360,41 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		505498691B1574B30037E3BD /* RemoteKit */ = {
+			isa = PBXGroup;
+			children = (
+				5054986C1B1574B40037E3BD /* RemoteKit.h */,
+				505498871B15750C0037E3BD /* Config.swift */,
+				5054986A1B1574B40037E3BD /* Supporting Files */,
+			);
+			path = RemoteKit;
+			sourceTree = "<group>";
+		};
+		5054986A1B1574B40037E3BD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5054986B1B1574B40037E3BD /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		505498781B1574B40037E3BD /* RemoteKitTests */ = {
+			isa = PBXGroup;
+			children = (
+				5054987B1B1574B40037E3BD /* RemoteKitTests.swift */,
+				505498791B1574B40037E3BD /* Supporting Files */,
+			);
+			path = RemoteKitTests;
+			sourceTree = "<group>";
+		};
+		505498791B1574B40037E3BD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5054987A1B1574B40037E3BD /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -313,6 +403,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				502048061B0C97D0002EBFC7 /* Wormhole.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		505498651B1574B30037E3BD /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5054986D1B1574B40037E3BD /* RemoteKit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,6 +432,7 @@
 			dependencies = (
 				502047F11B0C973E002EBFC7 /* PBXTargetDependency */,
 				502048171B0C97D0002EBFC7 /* PBXTargetDependency */,
+				5054987E1B1574B40037E3BD /* PBXTargetDependency */,
 			);
 			name = Remote;
 			productName = Remote;
@@ -428,6 +527,43 @@
 			productReference = 5020480B1B0C97D0002EBFC7 /* WormholeTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		505498671B1574B30037E3BD /* RemoteKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 505498851B1574B40037E3BD /* Build configuration list for PBXNativeTarget "RemoteKit" */;
+			buildPhases = (
+				505498631B1574B30037E3BD /* Sources */,
+				505498641B1574B30037E3BD /* Frameworks */,
+				505498651B1574B30037E3BD /* Headers */,
+				505498661B1574B30037E3BD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RemoteKit;
+			productName = RemoteKit;
+			productReference = 505498681B1574B30037E3BD /* RemoteKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		505498711B1574B40037E3BD /* RemoteKitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 505498861B1574B40037E3BD /* Build configuration list for PBXNativeTarget "RemoteKitTests" */;
+			buildPhases = (
+				5054986E1B1574B40037E3BD /* Sources */,
+				5054986F1B1574B40037E3BD /* Frameworks */,
+				505498701B1574B40037E3BD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				505498751B1574B40037E3BD /* PBXTargetDependency */,
+				505498771B1574B40037E3BD /* PBXTargetDependency */,
+			);
+			name = RemoteKitTests;
+			productName = RemoteKitTests;
+			productReference = 505498721B1574B40037E3BD /* RemoteKitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -470,6 +606,14 @@
 						CreatedOnToolsVersion = 6.3.2;
 						TestTargetID = 502047B01B0C971B002EBFC7;
 					};
+					505498671B1574B30037E3BD = {
+						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = 8D957V42M6;
+					};
+					505498711B1574B40037E3BD = {
+						CreatedOnToolsVersion = 6.3.2;
+						TestTargetID = 502047B01B0C971B002EBFC7;
+					};
 				};
 			};
 			buildConfigurationList = 502047AC1B0C971B002EBFC7 /* Build configuration list for PBXProject "Remote" */;
@@ -491,6 +635,8 @@
 				502047E31B0C973D002EBFC7 /* Remote WatchKit App */,
 				502048001B0C97D0002EBFC7 /* Wormhole */,
 				5020480A1B0C97D0002EBFC7 /* WormholeTests */,
+				505498671B1574B30037E3BD /* RemoteKit */,
+				505498711B1574B40037E3BD /* RemoteKitTests */,
 			);
 		};
 /* End PBXProject section */
@@ -545,6 +691,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		505498661B1574B30037E3BD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		505498701B1574B40037E3BD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -589,6 +749,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		505498631B1574B30037E3BD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				505498881B15750C0037E3BD /* Config.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5054986E1B1574B40037E3BD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5054987C1B1574B40037E3BD /* RemoteKitTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -621,6 +797,21 @@
 			isa = PBXTargetDependency;
 			target = 502048001B0C97D0002EBFC7 /* Wormhole */;
 			targetProxy = 502048161B0C97D0002EBFC7 /* PBXContainerItemProxy */;
+		};
+		505498751B1574B40037E3BD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 505498671B1574B30037E3BD /* RemoteKit */;
+			targetProxy = 505498741B1574B40037E3BD /* PBXContainerItemProxy */;
+		};
+		505498771B1574B40037E3BD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 502047B01B0C971B002EBFC7 /* Remote */;
+			targetProxy = 505498761B1574B40037E3BD /* PBXContainerItemProxy */;
+		};
+		5054987E1B1574B40037E3BD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 505498671B1574B30037E3BD /* RemoteKit */;
+			targetProxy = 5054987D1B1574B40037E3BD /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -940,6 +1131,87 @@
 			};
 			name = Release;
 		};
+		505498811B1574B40037E3BD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = RemoteKit/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		505498821B1574B40037E3BD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = RemoteKit/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		505498831B1574B40037E3BD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = RemoteKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Remote.app/Remote";
+			};
+			name = Debug;
+		};
+		505498841B1574B40037E3BD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = RemoteKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Remote.app/Remote";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -959,6 +1231,7 @@
 				502047D21B0C971C002EBFC7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		502047D31B0C971C002EBFC7 /* Build configuration list for PBXNativeTarget "RemoteTests" */ = {
 			isa = XCConfigurationList;
@@ -967,6 +1240,7 @@
 				502047D51B0C971C002EBFC7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		502047F31B0C973E002EBFC7 /* Build configuration list for PBXNativeTarget "Remote WatchKit App" */ = {
 			isa = XCConfigurationList;
@@ -975,6 +1249,7 @@
 				502047F51B0C973E002EBFC7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		502047F61B0C973E002EBFC7 /* Build configuration list for PBXNativeTarget "Remote WatchKit Extension" */ = {
 			isa = XCConfigurationList;
@@ -983,6 +1258,7 @@
 				502047F81B0C973E002EBFC7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5020481A1B0C97D0002EBFC7 /* Build configuration list for PBXNativeTarget "Wormhole" */ = {
 			isa = XCConfigurationList;
@@ -991,12 +1267,30 @@
 				5020481C1B0C97D0002EBFC7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5020481E1B0C97D0002EBFC7 /* Build configuration list for PBXNativeTarget "WormholeTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5020481F1B0C97D0002EBFC7 /* Debug */,
 				502048201B0C97D0002EBFC7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		505498851B1574B40037E3BD /* Build configuration list for PBXNativeTarget "RemoteKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				505498811B1574B40037E3BD /* Debug */,
+				505498821B1574B40037E3BD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		505498861B1574B40037E3BD /* Build configuration list for PBXNativeTarget "RemoteKitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				505498831B1574B40037E3BD /* Debug */,
+				505498841B1574B40037E3BD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};

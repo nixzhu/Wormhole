@@ -8,15 +8,16 @@
 
 import UIKit
 import Wormhole
+import RemoteKit
 
 class ViewController: UIViewController {
 
     @IBOutlet weak var lightStateLabel: UILabel!
     @IBOutlet weak var lightStateLockButton: UIButton!
 
-    @IBOutlet weak var lightLevelsLabel: UILabel!
+    @IBOutlet weak var lightLevelLabel: UILabel!
 
-    let wormhole = Wormhole(appGroupIdentifier: "group.com.nixWork.Wormhole", messageDirectoryName: "Wormhole")
+    let wormhole = Wormhole(appGroupIdentifier: Config.Wormhole.appGroupIdentifier, messageDirectoryName: Config.Wormhole.messageDirectoryName)
 
     var lightStateLocked = false {
         didSet {
@@ -24,12 +25,12 @@ class ViewController: UIViewController {
             if lightStateLocked {
                 lightStateLockButton.setTitle("Unlock", forState: .Normal)
 
-                wormhole.removeListenerByName("lightStateLabel", forMessageWithIdentifier: "lightState")
+                wormhole.removeListenerByName(Config.Wormhole.Listener.lightStateLabel, forMessageWithIdentifier: Config.Wormhole.Message.lightState)
 
             } else {
                 lightStateLockButton.setTitle("Lock", forState: .Normal)
 
-                wormhole.bindListener(lightStateListener, forMessageWithIdentifier: "lightState")
+                wormhole.bindListener(lightStateListener, forMessageWithIdentifier: Config.Wormhole.Message.lightState)
             }
 
         }
@@ -42,19 +43,19 @@ class ViewController: UIViewController {
             }
         }
 
-        let listener = Wormhole.Listener(name: "lightStateLabel", action: action)
+        let listener = Wormhole.Listener(name: Config.Wormhole.Listener.lightStateLabel, action: action)
 
         return listener
         }()
 
-    lazy var lightLevelsListener: Wormhole.Listener = {
+    lazy var lightLevelListener: Wormhole.Listener = {
         let action: Wormhole.Listener.Action = { [unowned self] message in
-            if let lightLevels = message as? NSNumber {
-                self.lightLevelsLabel.text = "Level \(lightLevels.integerValue)"
+            if let lightLevel = message as? NSNumber {
+                self.lightLevelLabel.text = "Level \(lightLevel.integerValue)"
             }
         }
 
-        let listener = Wormhole.Listener(name: "lightLevelsLabel", action: action)
+        let listener = Wormhole.Listener(name: Config.Wormhole.Listener.lightLevelLabel, action: action)
 
         return listener
         }()
@@ -62,9 +63,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        wormhole.bindListener(lightStateListener, forMessageWithIdentifier: "lightState")
+        wormhole.bindListener(lightStateListener, forMessageWithIdentifier: Config.Wormhole.Message.lightState)
 
-        wormhole.bindListener(lightLevelsListener, forMessageWithIdentifier: "lightLevels")
+        wormhole.bindListener(lightLevelListener, forMessageWithIdentifier: Config.Wormhole.Message.lightLevel)
     }
 
     // MARK: Actions

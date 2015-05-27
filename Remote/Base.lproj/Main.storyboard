@@ -50,7 +50,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="lightLevelsLabel" destination="mYX-S1-Zid" id="rvY-3r-sHU"/>
+                        <outlet property="lightLevelLabel" destination="mYX-S1-Zid" id="LXY-tv-FAF"/>
                         <outlet property="lightStateLabel" destination="ybi-It-qix" id="Kik-DK-fOx"/>
                         <outlet property="lightStateLockButton" destination="fH2-xM-UYJ" id="dCc-GN-hEU"/>
                     </connections>
