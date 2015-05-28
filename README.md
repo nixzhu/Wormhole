@@ -1,3 +1,6 @@
+
+![Wormhole Banner](https://raw.githubusercontent.com/nixzhu/Wormhole/master/images/wormhole_banner.png)
+
 # Wormhole
 
 Wormhole is not just a Swift port of [MMWormhole](https://github.com/mutualmobile/MMWormhole) but with better API and use logic. You can remove any a listener from it separately.
@@ -49,6 +52,8 @@ wormhole.removeListenerByName("lightStateLabel", forMessageWithIdentifier: "ligh
 
 For more information, see the demo.
 
+另有中文介绍：[再造虫洞：一次 Objective-C 到 Swift 的改写之旅](https://github.com/nixzhu/dev-blog/blob/master/2015-05-27-wormhole.md)
+
 ## Installation
 
 ### CocoaPods
@@ -80,6 +85,10 @@ $ pod install
 You should open the `{Project}.xcworkspace` instead of the `{Project}.xcodeproj` after you installed anything from CocoaPods.
 
 For more information about how to use CocoaPods, I suggest [this tutorial](http://www.raywenderlich.com/64546/introduction-to-cocoapods-2).
+
+## Credits
+
+Thanks to [Lex Tang](https://github.com/lexrus) design the logo banner.
 
 ## License
 
