@@ -27,12 +27,14 @@ class InterfaceController: WKInterfaceController {
         if let message = wormhole.messageWithIdentifier(Config.Wormhole.Message.lightState) {
             if let lightState = message as? NSNumber {
                 lightStateSwitch.setOn(lightState.boolValue)
+                self.lightState = lightState.boolValue
             }
         }
 
         if let message = wormhole.messageWithIdentifier(Config.Wormhole.Message.lightLevel) {
             if let lightLevel = message as? NSNumber {
                 lightLevelSlider.setValue(lightLevel.floatValue)
+                self.lightLevel = lightLevel.floatValue
             }
         }
     }
@@ -49,18 +51,17 @@ class InterfaceController: WKInterfaceController {
         }
     }
 
-    var lightLevels: Float = 2 {
+    var lightLevel: Float = 2 {
         didSet {
-            wormhole.passMessage(NSNumber(float: lightLevels), withIdentifier: Config.Wormhole.Message.lightLevel)
+            wormhole.passMessage(NSNumber(float: lightLevel), withIdentifier: Config.Wormhole.Message.lightLevel)
         }
     }
 
     @IBAction func switchLight(value: Bool) {
-        lightState = value
+        lightState = !lightState
     }
 
     @IBAction func changeLightLevels(value: Float) {
-        println(value)
-        lightLevels = value
+        lightLevel = value
     }
 }
