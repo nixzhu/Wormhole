@@ -30,7 +30,7 @@ public class Wormhole: NSObject {
 
     deinit {
         if let center = CFNotificationCenterGetDarwinNotifyCenter() {
-            CFNotificationCenterRemoveEveryObserver(center, unsafeAddressOf(self))
+            CFNotificationCenterRemoveEveryObserver(center, Unmanaged.passUnretained(self).toOpaque())
         }
     }
 
@@ -45,32 +45,39 @@ public class Wormhole: NSObject {
         if let message = message {
             var success = false
 
-            if let filePath = filePathForIdentifier(identifier) {
-                let data = NSKeyedArchiver.archivedDataWithRootObject(message)
-                success = data.writeToFile(filePath, atomically: true)
+            if let filePath = filePathForIdentifier(identifier: identifier) {
+                let url = URL(fileURLWithPath: filePath)
+                
+                let data = NSKeyedArchiver.archivedData(withRootObject: message)
+                do {
+                    try data.write(to: url, options: .atomic)
+                    success = true
+                } catch {
+                    success = false
+                }
             }
 
             if success {
                 if let center = CFNotificationCenterGetDarwinNotifyCenter() {
-                    CFNotificationCenterPostNotification(center, identifier, nil, nil, 1)
+                    CFNotificationCenterPostNotification(center, CFNotificationName(rawValue: identifier as CFString), nil, nil, true)
                 }
             }
 
         } else {
             if let center = CFNotificationCenterGetDarwinNotifyCenter() {
-                CFNotificationCenterPostNotification(center, identifier, nil, nil, 1)
+                CFNotificationCenterPostNotification(center, CFNotificationName(rawValue: identifier as CFString), nil, nil, true)
             }
         }
     }
 
     public struct Listener {
 
-        public typealias Action = Message? -> Void
+        public typealias Action = (Message?) -> Void
 
         let name: String
         let action: Action
 
-        public init(name: String, action: Action) {
+        public init(name: String, action: @escaping Action) {
             self.name = name
             self.action = action
         }
@@ -95,22 +102,20 @@ public class Wormhole: NSObject {
             let messageListener = MessageListener(messageIdentifier: identifier, listener: listener)
             messageListenerSet.insert(messageListener)
 
-            let block: @objc_block (CFNotificationCenter!, UnsafeMutablePointer<Void>, CFString!, UnsafePointer<Void>, CFDictionary!) -> Void = { _, _, _, _, _ in
+            let block: (CFNotificationCenter?, UnsafeMutableRawPointer, CFString?, UnsafeRawPointer, CFDictionary?) -> Void = { _, _, _, _, _ in
 
                 if self.messageListenerSet.contains(messageListener) {
-                    messageListener.listener.action(self.messageWithIdentifier(identifier))
+                    messageListener.listener.action(self.messageWithIdentifier(identifier: identifier))
                 }
             }
 
-            let imp: COpaquePointer = imp_implementationWithBlock(unsafeBitCast(block, AnyObject.self))
-            let callBack: CFNotificationCallback = unsafeBitCast(imp, CFNotificationCallback.self)
+            let imp: OpaquePointer = imp_implementationWithBlock(unsafeBitCast(block, to: AnyObject.self))
+            let callBack: CFNotificationCallback = unsafeBitCast(imp, to: CFNotificationCallback.self)
 
-            CFNotificationCenterAddObserver(center, unsafeAddressOf(self), callBack, identifier, nil, CFNotificationSuspensionBehavior.DeliverImmediately)
-
+            CFNotificationCenterAddObserver(center, Unmanaged.passUnretained(self).toOpaque(), callBack, identifier as CFString, nil, .deliverImmediately)
 
             // Try fire Listener's action for first time
-
-            listener.action(messageWithIdentifier(identifier))
+            listener.action(messageWithIdentifier(identifier: identifier))
         }
     }
 
@@ -134,7 +139,7 @@ public class Wormhole: NSObject {
     public func removeAllListenersForMessageWithIdentifier(identifier: String) {
 
         if let center = CFNotificationCenterGetDarwinNotifyCenter() {
-            CFNotificationCenterRemoveObserver(center, unsafeAddressOf(self), identifier, nil)
+            CFNotificationCenterRemoveObserver(center, Unmanaged.passUnretained(self).toOpaque(), CFNotificationName(identifier as CFString), nil)
 
             for listener in messageListenerSet {
                 if listener.messageIdentifier == identifier {
@@ -145,11 +150,11 @@ public class Wormhole: NSObject {
     }
 
     public func messageWithIdentifier(identifier: String) -> Message? {
-
+        
         if let
-            filePath = filePathForIdentifier(identifier),
-            data = NSData(contentsOfFile: filePath),
-            message = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? Message {
+            filePath = filePathForIdentifier(identifier: identifier),
+            let data = NSData(contentsOfFile: filePath),
+            let message = NSKeyedUnarchiver.unarchiveObject(with: data as Data) as? Message {
                 return message
         }
 
@@ -158,23 +163,22 @@ public class Wormhole: NSObject {
 
     public func destroyMessageWithIdentifier(identifier: String) {
 
-        if let filePath = filePathForIdentifier(identifier) {
-            let fileManager = NSFileManager.defaultManager()
-            fileManager.removeItemAtPath(filePath, error: nil)
+        if let filePath = filePathForIdentifier(identifier: identifier) {
+            let fileManager = FileManager.default
+            try? fileManager.removeItem(atPath: filePath)
         }
     }
 
     public func destroyAllMessages() {
 
-        if let directoryPath = messagePassingDirectoryPath() {
+        if let directoryPath = messagePassingDirectoryPath() as NSString? {
 
-            let fileManager = NSFileManager.defaultManager()
+            let fileManager = FileManager.default
 
-            if let fileNames = fileManager.contentsOfDirectoryAtPath(directoryPath, error: nil) as? [String] {
-
+            if let fileNames = try? fileManager.contentsOfDirectory(atPath: directoryPath as String) {
                 for fileName in fileNames {
-                    let filePath = directoryPath.stringByAppendingPathComponent(fileName)
-                    fileManager.removeItemAtPath(filePath, error: nil)
+                    let filePath = directoryPath.appendingPathComponent(fileName)
+                    try? fileManager.removeItem(atPath: filePath)
                 }
             }
         }
@@ -188,9 +192,9 @@ public class Wormhole: NSObject {
             return nil
         }
 
-        if let directoryPath = messagePassingDirectoryPath() {
+        if let directoryPath = messagePassingDirectoryPath() as NSString? {
             let fileName = identifier + ".archive"
-            let filePath = directoryPath.stringByAppendingPathComponent(fileName)
+            let filePath = directoryPath.appendingPathComponent(fileName)
 
             return filePath
         }
@@ -200,16 +204,15 @@ public class Wormhole: NSObject {
 
     func messagePassingDirectoryPath() -> String? {
 
-        let fileManager = NSFileManager.defaultManager()
+        let fileManager = FileManager.default
 
-        if let
-            appGroupContainer = fileManager.containerURLForSecurityApplicationGroupIdentifier(self.appGroupIdentifier),
-            appGroupContainerPath = appGroupContainer.path {
-                let directoryPath = appGroupContainerPath.stringByAppendingPathComponent(messageDirectoryName)
+        if let appGroupContainer = fileManager.containerURL(forSecurityApplicationGroupIdentifier: self.appGroupIdentifier) {
+            let appGroupContainerPath = appGroupContainer.path as NSString
+            let directoryPath = appGroupContainerPath.appendingPathComponent(messageDirectoryName)
+            
+            try? fileManager.createDirectory(atPath: directoryPath, withIntermediateDirectories: true, attributes: nil)
 
-                fileManager.createDirectoryAtPath(directoryPath, withIntermediateDirectories: true, attributes: nil, error: nil)
-
-                return directoryPath
+            return directoryPath
         }
 
         return nil
